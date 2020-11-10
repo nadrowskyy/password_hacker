@@ -11,18 +11,6 @@ def brute_force():
     for i in product:
         yield i
 
-def password_base(l):
-    with open('passwords.txt', 'r') as f:
-        for line in list(f)[l:l+1]:
-            #print(line.strip())
-            word = line[:-1]
-            word_upper = line.upper()[:-1]
-            # print(word)
-            # print(word_upper)
-            passwords = map(''.join, itertools.product(*zip(word, word_upper)))
-            for password in passwords:
-                yield password
-
 def login_base():
     with open('logins.txt', 'r') as logins:
         for login in list(logins):
@@ -37,7 +25,6 @@ def connection():
     # łączenie
     connection.connect((address, port))
     str_response = {"result": ""}
-    #i = 0
     for suppose_login in login_base():
         login_data = {"login": suppose_login, "password": ' '}
         json_login_data = json.dumps(login_data)
@@ -69,13 +56,6 @@ def connection():
                     if difference_password > difference:
                         password = suppose_password
                         break
-                    # if str_response["result"] == "Exception happened during login":
-                    #     # suppose_password += i[0]
-                    #     password = suppose_password
-                    #     break
-                    # elif difference_password <= difference:
-                    #     suppose_password = password
-                    #     continue
                     elif str_response["result"] == "Wrong password!":
                         suppose_password = password
                         continue
